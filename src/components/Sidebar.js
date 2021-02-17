@@ -92,11 +92,12 @@ class NavItem extends React.Component {
   handleClick = () => {
     const { path, onItemClick } = this.props;
     onItemClick(path);
+    console.log("In NavItem HandleClick");
   }
 
   render() {
     const { active } = this.props;
-
+    console.log("in NavItem render");
     return (
       <StyledNavItem active={active}>
         <Link to={this.props.path} className={this.props.css} onClick={this.handleClick}>
@@ -111,7 +112,12 @@ const NavIcon = styled.div`
 `;
 
 export default class Sidebar extends React.Component {
+  componentDidMount() {
+    console.log('I was triggered during componentDidMount');
+  }
+
   render() {
+    console.log('I was triggered during render');
     return (
         <RouterSideNav></RouterSideNav>
     );
