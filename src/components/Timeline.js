@@ -10,6 +10,7 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 import HotelIcon from '@material-ui/icons/Hotel';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 import RepeatIcon from '@material-ui/icons/Repeat';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -23,32 +24,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedTimeline() {
+export default function CustomizedTimeline({items}) {
   const classes = useStyles();
 
   return (
     <Timeline align="alternate">
-      <TimelineItem>
-        <TimelineOppositeContent>
-          <Typography variant="body2" color="textSecondary">
-            9:30 am
-          </Typography>
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot>
-            <FastfoodIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
-            <Typography variant="h6" component="h1">
-              Eat
+      {items.map(item => (
+        <TimelineItem>
+          <TimelineOppositeContent>
+            <Typography variant="body2" color="textSecondary">
+              <div style={{fontFamily: 'HairyBeard'}}>{item.date}</div>
             </Typography>
-            <Typography>Because you need strength</Typography>
-          </Paper>
-        </TimelineContent>
-      </TimelineItem>
+          </TimelineOppositeContent>
+          <TimelineSeparator>
+            <TimelineDot>
+              <LibraryBooksIcon />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                <div style={{fontFamily: 'HairyBeard'}}>{item.date}</div>
+              </Typography>
+              <img alt={item.comment} style={{borderRadius:16, maxWidth: '150px'}} src={item.file} />
+              <Typography>{item.comment}</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+      ))}
 
       <TimelineItem>
         <TimelineOppositeContent>
@@ -105,7 +109,6 @@ export default function CustomizedTimeline() {
           </Paper>
         </TimelineContent>
       </TimelineItem>
-
     </Timeline>
   );
 }

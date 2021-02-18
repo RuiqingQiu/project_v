@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import firebase from './Firebase.js'; // <--- add this line
+import CustomizedTimeline from './components/Timeline';
+import { Box, Container } from 'react-layout-components';
 
 const GridWrapper = styled.div`
   display: grid;
@@ -39,7 +41,7 @@ export default class Home extends React.Component {
     const storage = firebase.storage();
 
     const itemsRef = firebase.database().ref('images');
-    itemsRef.on('value', (snapshot) => {
+    itemsRef.limitToLast(2).on('value', (snapshot) => {
       let items = snapshot.val();
       console.log(items);
 
@@ -72,22 +74,16 @@ export default class Home extends React.Component {
 
     return (
       <div>
-        <GridWrapper>
-          <p>This is a paragraph and I am writing on the home page</p>
-          <p>This is another paragraph, hi hey hello whatsup yo</p>
-        </GridWrapper>
-        <div style={{
-              display: "flex",
-              justifyContent: "center",
-              overflowX: "scroll",
+        <Container>
+          <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
             }}>
-          {items.map(item => (
-            <div key={item.file} style={{marginLeft: 10}}>
-              <img alt={item.comment} style={{borderRadius:16, maxWidth: '150px'}} src={item.file} />
-              {item.date} {item.comment}
-            </div>
-          ))}
-        </div>
+            <h2 style={{fontFamily: 'HairyBeard'}}>Enjoy a timeline for your furry friend!</h2>
+          </div>
+        </Container>
+        <CustomizedTimeline items={items}/>
       </div>
     );
   }
